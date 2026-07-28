@@ -63,7 +63,7 @@ export async function createProject(formData) {
     }
   }
 
-  redirect("/test");
+  redirect("/admin");
 }
 
 export async function deleteProject(formData) {
@@ -79,7 +79,7 @@ export async function deleteProject(formData) {
     throw new Error("Échec de la suppression");
   }
 
-  redirect('/test');
+  redirect('/admin');
 }
 
 export async function modifyProject(formData) {
@@ -146,7 +146,7 @@ export async function modifyProject(formData) {
       throw new Error("Échec de l'association des tags");
     }
   }
-  redirect('/test');
+  redirect('/admin');
 }
 
 export async function createTag(formData) {
@@ -163,5 +163,5 @@ export async function createTag(formData) {
     throw new Error("Échec de la création du tag");
   }
 
-  redirect("/test");
+  redirect("/admin");
 }

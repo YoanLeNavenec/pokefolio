@@ -17,5 +17,5 @@ export async function login(formData) {
     redirect("/login?error=1");
   }
 
-  redirect("/test");
+  redirect("/admin");
 }
