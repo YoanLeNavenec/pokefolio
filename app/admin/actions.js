@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+//create a new project function
 export async function createProject(formData) {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
@@ -11,20 +12,20 @@ export async function createProject(formData) {
   const imageFile = formData.get("image");
   const filePath = `${Date.now()}-${imageFile.name}`;
 
+  //error handling
   const { error: uploadError } = await supabase.storage
     .from("project-images")
     .upload(filePath, imageFile);
 
   if (uploadError) {
     console.error(uploadError);
-    throw new Error("Échec de l'upload de l'image");
+    throw new Error("Couldn't upload image");
   }
 
   const { data: { publicUrl } } = supabase.storage
     .from("project-images")
     .getPublicUrl(filePath);
 
-  // ← changement 1 : .select().single() pour récupérer la ligne créée, avec son id généré
   const { data: newProject, error: insertError } = await supabase
     .from("projects")
     .insert({
@@ -43,10 +44,9 @@ export async function createProject(formData) {
 
   if (insertError) {
     console.error(insertError);
-    throw new Error("Échec de l'insertion du projet");
+    throw new Error("Couldn't insert project");
   }
 
-  // ← changement 2 : associer les tags cochés à ce nouveau projet
   const selectedTagIds = formData.getAll("tags");
 
   if (selectedTagIds.length > 0) {
@@ -59,13 +59,14 @@ export async function createProject(formData) {
 
     if (tagsError) {
       console.error(tagsError);
-      throw new Error("Échec de l'association des tags");
+      throw new Error("Couldn't add tags");
     }
   }
 
   redirect("/admin");
 }
 
+//delete an existing project function
 export async function deleteProject(formData) {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
@@ -76,12 +77,13 @@ export async function deleteProject(formData) {
 
   if (error) {
     console.error(error);
-    throw new Error("Échec de la suppression");
+    throw new Error("Failed to delete");
   }
 
   redirect('/admin');
 }
 
+//modify an existing project function
 export async function modifyProject(formData) {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
@@ -90,25 +92,27 @@ export async function modifyProject(formData) {
   const currentImageUrl = formData.get("current_image_url");
   const imageFile = formData.get("image");
 
-  let imageUrl = currentImageUrl; // ← valeur par défaut : on garde l'ancienne
+  let imageUrl = currentImageUrl;
   if (imageFile.size > 0){
     const filePath = `${Date.now()}-${imageFile.name}`;
 
+    //error message on failure to update image
     const { error: uploadError } = await supabase.storage
     .from("project-images")
     .upload(filePath, imageFile);
     if (uploadError) {
       console.error(uploadError);
-      throw new Error("Échec de l'upload de l'image");
+      throw new Error("Couldn't upload image");
     }
 
     const { data: { publicUrl } } = supabase.storage
     .from("project-images")
     .getPublicUrl(filePath);
 
-    imageUrl = publicUrl; // ← sans "const", tu réassignes la variable existante
+    imageUrl = publicUrl;
   }
 
+  //update element
   const { error: updateError } = await supabase
   .from('projects')
   .update({
@@ -118,17 +122,19 @@ export async function modifyProject(formData) {
     difficulties: formData.get("difficulties"),
     demo_url: formData.get("demo_url"),
     repo_url: formData.get("repo_url"),
-    image_url: imageUrl, // ← soit l'ancienne, soit la nouvelle, selon le if au-dessus
+    image_url: imageUrl,
     is_featured: formData.get("is_featured") === "on",
     sort_order: Number(formData.get("sort_order")),
   })
   .eq('id', id);
 
+  //error message
   if (updateError) {
     console.error(updateError);
-    throw new Error("Échec de la modification du projet");
+    throw new Error("Couldn't apply edits");
   }
 
+  //fetch the tags, if there are any
   await supabase.from('project_tags').delete().eq('projects_ref', id);
 
   const selectedTagIds = formData.getAll("tags");
@@ -139,16 +145,18 @@ export async function modifyProject(formData) {
       tag_ref: tagId,
     }));
 
+    //error message
     const { error: tagsError } = await supabase.from('project_tags').insert(rows);
 
     if (tagsError) {
       console.error(tagsError);
-      throw new Error("Échec de l'association des tags");
+      throw new Error("Couldn't associate tag");
     }
   }
   redirect('/admin');
 }
 
+//Create Tag Function
 export async function createTag(formData) {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
@@ -158,10 +166,105 @@ export async function createTag(formData) {
     color: formData.get("color"),
   });
 
+  //error message
   if (error) {
     console.error(error);
-    throw new Error("Échec de la création du tag");
+    throw new Error("Couldn't create tag");
   }
 
   redirect("/admin");
+}
+
+//art-side of the admin panel
+
+//create a new art project function
+export async function createArtPiece(formData) {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  const coverFile = formData.get("cover_image");
+  const filePath = `${Date.now()}-${coverFile.name}`;
+
+  //error handling
+  const { error: uploadError } = await supabase.storage
+    .from("project-images") // ← ou un nouveau bucket dédié, on en reparle si besoin
+    .upload(filePath, coverFile);
+
+  if (uploadError) {
+    console.error(uploadError);
+    throw new Error("Couldn't upload cover");
+  }
+
+  const { data: { publicUrl } } = supabase.storage
+    .from("project-images")
+    .getPublicUrl(filePath);
+
+  //create the element
+  const { data: newArtPiece, error: insertError } = await supabase
+    .from("art_pieces")
+    .insert({
+      title: formData.get("title"),
+      category: formData.get("category"),
+      cover_image_url: publicUrl,
+      description: formData.get("description"),
+      date: formData.get("date"),
+      client: formData.get("client"),
+      source_material: formData.get("source_material"),
+      linked_project_ref: formData.get("linked_project_ref") || null,
+    })
+    .select()
+    .single();
+
+  //error message
+  if (insertError) {
+    console.error(insertError);
+    throw new Error("Couldn't insert element");
+  }
+
+  //fetch all images storaged in DB
+  const galleryFiles = formData.getAll("gallery_images");
+
+  //handles absence of selection for images
+  if (galleryFiles.length > 0 && galleryFiles[0].size > 0) {
+    const galleryRows = [];
+
+    //inserts images to project per index
+    for (let i = 0; i < galleryFiles.length; i++) {
+      const file = galleryFiles[i];
+      const galleryFilePath = `${Date.now()}-${i}-${file.name}`;
+
+      //error handling
+      const { error: galleryUploadError } = await supabase.storage
+        .from("project-images")
+        .upload(galleryFilePath, file);
+
+      if (galleryUploadError) {
+        console.error(galleryUploadError);
+        throw new Error("Couldn't upload image");
+      }
+
+      const { data: { publicUrl: galleryPublicUrl } } = supabase.storage
+        .from("project-images")
+        .getPublicUrl(galleryFilePath);
+
+      galleryRows.push({
+        art_piece_ref: newArtPiece.id,
+        image_url: galleryPublicUrl,
+        sort_order: i,
+      });
+    }
+
+    //inserting images into the rows of the gallery
+    const { error: galleryInsertError } = await supabase
+      .from("art_piece_images")
+      .insert(galleryRows);
+
+    //error message
+    if (galleryInsertError) {
+      console.error(galleryInsertError);
+      throw new Error("Couldn't insert images into gallery");
+    }
+  }
+
+  redirect('/admin');
 }
