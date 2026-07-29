@@ -48,7 +48,7 @@ export default async function Page({params}) {
             {tag.name}
           </label>
         ))}
-        <button type="submit">Modify the project</button>
+        <button type="submit">Edit Project</button>
   </form>
 )
 }

@@ -5,10 +5,10 @@ export default function ProjectForm({ tags }) {
         <form action={createProject}>
           <input name="title" type="text" placeholder="Titre" required />
           <input name="date" type="date" required />
-          <textarea name="description_long" placeholder="Description longue"></textarea>
-          <textarea name="difficulties" placeholder="Difficultés rencontrées"></textarea>
-          <input name="demo_url" type="text" placeholder="Lien démo" />
-          <input name="repo_url" type="text" placeholder="Lien repo" required />
+          <textarea name="description_long" placeholder="Long Description"></textarea>
+          <textarea name="difficulties" placeholder="Issues encountered"></textarea>
+          <input name="demo_url" type="text" placeholder="Link to demo" />
+          <input name="repo_url" type="text" placeholder="Link to repo" required />
           <input name="image" type="file" accept="image/*" required />
           <label>
             <input name="is_featured" type="checkbox" /> Featured
@@ -20,7 +20,7 @@ export default function ProjectForm({ tags }) {
               {tag.name}
             </label>
           ))}
-          <button type="submit">Ajouter le projet</button>
+          <button type="submit">Add project</button>
         </form>
   )
 }
