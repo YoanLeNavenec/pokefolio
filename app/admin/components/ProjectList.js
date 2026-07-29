@@ -1,3 +1,5 @@
+"use client";
+
 import { deleteProject } from "../actions";
 
 export default function ProjectList({ projects }) {
@@ -20,7 +22,12 @@ export default function ProjectList({ projects }) {
 
           <a href={`/admin/edit/${project.id}`}>Edit</a>
 
-          <form action={deleteProject}>
+          <form action={deleteProject} onSubmit={(e) => {
+            const confirmed = confirm("Do you really want to delete this?");
+            if (!confirmed) {
+              e.preventDefault();
+            }
+          }}>
             <input type="hidden" name="id" value={project.id}></input>
             <button type="submit">Delete</button>
           </form>

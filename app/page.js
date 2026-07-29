@@ -18,6 +18,8 @@ export default async function Home() {
     .order('sort_order', { ascending: true })
 
   return (
+    <>
+    {projects?.length === 0 && <p>No projects yet.</p>}
     <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
       {projects?.map((project) => (
         <li
@@ -53,5 +55,6 @@ export default async function Home() {
         </li>
       ))}
     </ul>
+    </>
   )
 }
