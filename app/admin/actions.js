@@ -175,6 +175,22 @@ export async function createTag(formData) {
   redirect("/admin");
 }
 
+//delete an existing tag function
+export async function deleteTag(formData) {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  const id = formData.get("id");
+
+  const { error } = await supabase.from('tags').delete().eq('id', id);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Failed to delete");
+  }
+  redirect('/admin')
+}
+
 //art-side of the admin panel
 
 //create a new art project function
@@ -387,3 +403,4 @@ export async function modifyArtPiece(formData) {
 
   redirect('/admin');
 }
+
