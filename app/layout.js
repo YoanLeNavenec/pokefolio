@@ -12,8 +12,11 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "Pokefolio",
-  description: "DrMedhyena/ElliotDaSmol's Dev and Artist portfolio",
+  title: {
+    default: "Pokefolio",
+    template: "%s · Pokefolio",
+  },
+  description: "Developer & digital artist portfolio",
 };
 
 export default function RootLayout({ children }) {

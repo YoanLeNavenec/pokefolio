@@ -4,6 +4,8 @@ import { cookies } from 'next/headers'
 import Nav from '../components/Nav'
 import Link from 'next/link'
 
+export const metadata = { title: "dev side" };
+
 export default async function Home() {
   const cookieStore = await cookies()
   const supabase = createClient(cookieStore)

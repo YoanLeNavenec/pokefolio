@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: "Choose your path" };
+
 export default function Home() {
   return (
     <div className="group relative min-h-screen overflow-hidden">
@@ -32,7 +34,7 @@ export default function Home() {
         />
       </div>
 
-      <div className="relative z-10 min-h-screen flex items-center justify-center gap-8">
+      <div className="relative z-10 min-h-screen flex flex-col sm:flex-row items-center justify-center gap-8">
         <Link
           href="/dev"
           className="dev-card w-64 h-80 bg-surface rounded-2xl border-4 border-[#4a7fb5] flex items-center justify-center shadow-lg hover:scale-105 transition-transform"

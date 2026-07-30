@@ -1,5 +1,7 @@
 import Link from 'next/link';
 
+export const metadata = { title: "Welcome!" };
+
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center gap-10 px-6 py-12">
@@ -26,11 +28,11 @@ export default function Home() {
 
       <div className="flex gap-8 mt-6">
         {[
-          { label: 'GitHub', href: '#' },
-          { label: 'Bluesky', href: '#' },
-          { label: 'LinkedIn', href: '#' },
+          { label: 'GitHub', href: 'https://github.com/YoanLeNavenec' },
+          { label: 'Bluesky', href: 'https://bsky.app/profile/elliotdasmol.bsky.social' },
+          { label: 'LinkedIn', href: 'https://www.linkedin.com/in/yoan-le-navenec-376b27202/' },
         ].map((link) => (
-          <a key={link.label} href={link.href} className="flex flex-col items-center gap-2 group">
+          <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 group">
             <div className="w-14 h-14 rounded-full bg-surface border-2 border-text-muted flex items-center justify-center group-hover:border-accent-gold transition-colors">
               <span className="text-xl">✨</span>
             </div>

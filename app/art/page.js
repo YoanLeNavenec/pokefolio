@@ -4,6 +4,7 @@ import { cookies } from 'next/headers'
 import Nav from '../components/Nav'
 import Link from 'next/link'
 
+export const metadata = { title: "art side" };
 const categoryLabels = {
     commande: "Commission",
     perso: "Personal project",

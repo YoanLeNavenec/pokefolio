@@ -1,5 +1,7 @@
 import { login } from "./actions";
 
+export const metadata = { title: "Login" };
+
 export default async function Page({ searchParams }) {
   const params = await searchParams;
 
