@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Pokefolio
 
-## Getting Started
+A dynamic portfolio where projects can be added, edited, and removed on the fly — split into my two worlds: **Dev** and **Art**.
+I needed somewhere to stock and showcase all of my work as a professional, but I'm not two persons, there isn't two DrPoochyena. So i chose
+to combine both sides of my person into one portfolio, that's uniquely me and reflects as such. 
 
-First, run the development server:
+I, by no means, am a god at developpement or drawing. I just wanted something functionnal and well, that i'd make myself as a showcasing of what i can do.
+All the code and the assets are made by me. You are more than welcome to re-use what i did, i tried to comment it in a relatively proper manner. Just,
+y'know, credit me please. And drink water. It's hot out there.
+
+🔗 [My live portfolio, hosted on Vercel!](https://pokefolio-tawny.vercel.app)
+
+## Stack
+
+- [Next.js](https://nextjs.org/) (App Router) + [Tailwind CSS](https://tailwindcss.com/)
+- [Supabase](https://supabase.com/) (Postgres, Auth, Storage)
+- Deployed on [Vercel](https://vercel.com/)
+
+## Features
+
+- Two sides to the portfolio: software projects and digital art, each with their own data model
+- Admin dashboard to add/edit/delete projects, art pieces, and tags
+- Image upload (single + multi-file gallery) via Supabase Storage
+- Auth-protected admin routes
+- Tag system with dynamic colors
+
+## Running locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+You'll need a `.env.local` with:
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Note
+Not affiliated with, endorsed by, or sponsored by Wizards of the Coast, Nintendo, Game Freak, or The Pokémon Company. I'm just a fan of both universes and their aesthetics.
