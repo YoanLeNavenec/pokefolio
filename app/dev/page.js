@@ -19,13 +19,28 @@ export default async function Home() {
     .order('sort_order', { ascending: true })
 
   return (
-    <>
+    <div className="relative min-h-screen overflow-hidden">
+      <div className="absolute inset-0 opacity-30 pointer-events-none">
+    <div
+      className="absolute inset-0"
+      style={{
+        backgroundImage:
+          'linear-gradient(rgba(74,127,181,0.18) 1px, transparent 1px), linear-gradient(90deg, rgba(74,127,181,0.18) 1px, transparent 1px)',
+        backgroundSize: '40px 40px',
+      }}
+    />
+      <div
+        className="absolute inset-0"
+        style={{ background: 'radial-gradient(circle at 30% 50%, rgba(74,127,181,0.35), transparent 60%)' }}
+      />
+    </div>
+    <div className="relative z-10">
     <Nav />
     {projects?.length === 0 && <p>No projects yet.</p>}
     <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
       {projects?.map((project) => (
         <li
-          className="bg-surface rounded-2xl p-3 shadow-[0_25px_40px_-15px_rgba(212,175,55,0.35)] max-w-[260px] mx-auto"
+          className="bg-surface rounded-2xl p-3 shadow-[0_25px_40px_-15px_rgba(212,175,55,0.35)] max-w-65 mx-auto"
           key={project.id}
           style={{ borderWidth: '3px', borderStyle: 'solid', borderColor: project.project_tags?.[0]?.tags?.color || '#4a7fb5' }}
         >
@@ -57,6 +72,7 @@ export default async function Home() {
         </li>
       ))}
     </ul>
-    </>
+    </div>
+    </div>
   )
 }

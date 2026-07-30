@@ -27,7 +27,7 @@ export default async function Home() {
     <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
       {artPieces?.map((artPiece) => (
         <li
-          className="bg-surface rounded-2xl p-3 shadow-[0_25px_40px_-15px_rgba(212,175,55,0.35)] max-w-[260px] mx-auto"
+          className="bg-surface rounded-2xl p-3 shadow-[0_25px_40px_-15px_rgba(212,175,55,0.35)] max-w-65 mx-auto"
           key={artPiece.id}>
 
         <p className="text-text font-medium">{artPiece.title}</p>

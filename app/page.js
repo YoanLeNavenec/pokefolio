@@ -18,7 +18,7 @@ export default function Home() {
 
         <Link
           href="/select"
-          className="mt-2 font-mono text-sm px-6 py-2 rounded-full bg-accent-gold text-[#16140f] hover:scale-105 transition-transform"
+          className="mt-2 font-mono text-sm px-6 py-2 rounded-full bg-accent-gold text-bg hover:scale-105 transition-transform"
         >
           Follow me →
         </Link>

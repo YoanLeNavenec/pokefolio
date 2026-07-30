@@ -37,7 +37,7 @@ export default async function Page({ searchParams }) {
 
           <button
             type="submit"
-            className="mt-2 font-mono text-sm px-4 py-2 rounded-lg bg-accent-gold text-[#16140f] hover:scale-[1.02] transition-transform"
+            className="mt-2 font-mono text-sm px-4 py-2 rounded-lg bg-accent-gold text-bg hover:scale-[1.02] transition-transform"
           >
             Submit
           </button>
