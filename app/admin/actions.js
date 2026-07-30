@@ -404,3 +404,12 @@ export async function modifyArtPiece(formData) {
   redirect('/admin');
 }
 
+//logout function
+export async function logout() {
+  const cookieStore = await cookies();
+  const supabase = createClient(cookieStore);
+
+  await supabase.auth.signOut();
+
+  redirect('/login');
+}

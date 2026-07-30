@@ -7,6 +7,8 @@ import TagForm from './components/TagForm'
 import TagList from './components/TagList'
 import ArtPieceForm from './components/ArtPieceForm'
 import ArtPieceList from './components/ArtPieceList'
+import Nav from '../components/Nav'
+import { logout } from './actions'
 
 export default async function Page() {
   const cookieStore = await cookies()
@@ -32,7 +34,16 @@ export default async function Page() {
 
   return (
     <div className="min-h-screen p-6">
-      <h1 className="text-2xl font-mono text-text mb-8">Admin dashboard</h1>
+      
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-2xl font-mono text-text">Admin dashboard</h1>
+        <Nav />
+        <form action={logout}>
+          <button type="submit" className="text-xs font-mono px-3 py-1.5 rounded-md bg-red-900/40 text-red-200 border border-red-700 hover:bg-red-900/60 transition-colors">
+            Logout
+          </button>
+        </form>
+      </div>
 
       <section className="mb-12">
         <h2 className="text-xl font-mono text-text mb-4 border-b border-text-muted/20 pb-2">Add new</h2>
