@@ -12,14 +12,14 @@ export async function createProject(formData) {
   const imageFile = formData.get("image");
   const filePath = `${Date.now()}-${imageFile.name}`;
 
-  //error handling
+
   const { error: uploadError } = await supabase.storage
     .from("project-images")
     .upload(filePath, imageFile);
 
   if (uploadError) {
     console.error(uploadError);
-    throw new Error("Couldn't upload image");
+    throw new Error("Échec de l'upload de l'image");
   }
 
   const { data: { publicUrl } } = supabase.storage
