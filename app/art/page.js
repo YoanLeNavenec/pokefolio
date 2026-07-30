@@ -2,6 +2,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 import Nav from '../components/Nav'
+import Link from 'next/link'
 
 const categoryLabels = {
     commande: "Commission",
@@ -43,7 +44,7 @@ export default async function Home() {
             <li
               className="bg-surface rounded-2xl p-3 shadow-[0_25px_40px_-15px_rgba(212,175,55,0.35)] max-w-65 mx-auto"
               key={artPiece.id}>
-
+              <Link href={`/art/${artPiece.id}`} className="block">
             <p className="text-text font-medium">{artPiece.title}</p>
             <p className="text-xs text-text-muted">{categoryLabels[artPiece.category]}</p>
             <div className="h-40 rounded-lg overflow-hidden">
@@ -60,6 +61,7 @@ export default async function Home() {
             <p className="text-xs italic text-text-muted px-2 pt-2 font-mono">
               « Created {new Date(artPiece.date).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })} »
             </p>
+            </Link>
             </li>
           ))}
         </ul>

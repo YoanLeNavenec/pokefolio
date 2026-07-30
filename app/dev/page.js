@@ -2,6 +2,7 @@
 import { createClient } from '@/utils/supabase/server'
 import { cookies } from 'next/headers'
 import Nav from '../components/Nav'
+import Link from 'next/link'
 
 export default async function Home() {
   const cookieStore = await cookies()
@@ -44,6 +45,7 @@ export default async function Home() {
           key={project.id}
           style={{ borderWidth: '3px', borderStyle: 'solid', borderColor: project.project_tags?.[0]?.tags?.color || '#4a7fb5' }}
         >
+          <Link href={`/dev/${project.id}`} className="block">
         <div className="flex items-center justify-between px-2 pb-2">
           <p className="text-text font-medium">{project.title}</p>
           {project.is_featured && <span className="text-accent-gold">★</span>}
@@ -69,6 +71,7 @@ export default async function Home() {
         <p className="text-xs italic text-text-muted px-2 pt-2 font-mono">
           « Created {new Date(project.date).toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })} »
         </p>
+        </Link>
         </li>
       ))}
     </ul>
