@@ -36,4 +36,5 @@ NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=
 
 ## Note
+
 Not affiliated with, endorsed by, or sponsored by Wizards of the Coast, Nintendo, Game Freak, or The Pokémon Company. I'm just a fan of both universes and their aesthetics.

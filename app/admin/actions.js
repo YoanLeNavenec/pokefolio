@@ -4,13 +4,20 @@ import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
+//cleanup the name of the project
+function safeFilePath(fileName) {
+  const ext = fileName.split('.').pop().toLowerCase().replace(/[^a-z0-9]/g, '');
+  const randomId = Math.random().toString(36).slice(2, 8);
+  return `${Date.now()}-${randomId}.${ext}`;
+}
+
 //create a new project function
 export async function createProject(formData) {
   const cookieStore = await cookies();
   const supabase = createClient(cookieStore);
 
   const imageFile = formData.get("image");
-  const filePath = `${Date.now()}-${imageFile.name}`;
+  const filePath = safeFilePath(imageFile.name);
 
 
   const { error: uploadError } = await supabase.storage
@@ -94,7 +101,7 @@ export async function modifyProject(formData) {
 
   let imageUrl = currentImageUrl;
   if (imageFile.size > 0){
-    const filePath = `${Date.now()}-${imageFile.name}`;
+    const filePath = safeFilePath(imageFile.name);
 
     //error message on failure to update image
     const { error: uploadError } = await supabase.storage
@@ -199,7 +206,7 @@ export async function createArtPiece(formData) {
   const supabase = createClient(cookieStore);
 
   const coverFile = formData.get("cover_image");
-  const filePath = `${Date.now()}-${coverFile.name}`;
+  const filePath = safeFilePath(coverFile.name);
 
   //error handling
   const { error: uploadError } = await supabase.storage
@@ -246,7 +253,7 @@ export async function createArtPiece(formData) {
     //inserts images to project per index
     for (let i = 0; i < galleryFiles.length; i++) {
       const file = galleryFiles[i];
-      const galleryFilePath = `${Date.now()}-${i}-${file.name}`;
+      const galleryFilePath = safeFilePath(file.name);
 
       //error handling
       const { error: galleryUploadError } = await supabase.storage
@@ -314,7 +321,7 @@ export async function modifyArtPiece(formData) {
   let coverImageUrl = currentCoverImageUrl;
 
   if (coverFile.size > 0) {
-    const filePath = `${Date.now()}-${coverFile.name}`;
+    const filePath = safeFilePath(coverFile.name);
 
     const { error: uploadError } = await supabase.storage
       .from("project-images")
@@ -368,7 +375,7 @@ export async function modifyArtPiece(formData) {
 
     for (let i = 0; i < newGalleryFiles.length; i++) {
       const file = newGalleryFiles[i];
-      const galleryFilePath = `${Date.now()}-${i}-${file.name}`;
+      const galleryFilePath = safeFilePath(file.name);
 
       const { error: galleryUploadError } = await supabase.storage
         .from("project-images")
